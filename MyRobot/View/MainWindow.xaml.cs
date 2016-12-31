@@ -1,5 +1,5 @@
 ﻿using MyRobot.Model;
-
+using MyRobot.Model.Network;
 using MyRobot.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -34,9 +34,9 @@ namespace MyRobot
 
         private void Start(object sender, RoutedEventArgs e)
         {
-          //  MyServer server = new MyServer(1234, MyServer.MyClientHandler, 3);
+            MyServer server = new MyServer(1234, MyServer.MyClientHandler, 3);
 
-
+            server.start();
             /*
             DateTime m_start = DateTime.Now;
 

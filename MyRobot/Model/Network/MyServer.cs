@@ -41,12 +41,13 @@ namespace MyRobot.Model.Network
                     // TcpListener server = new TcpListener(port);
                     listner = new TcpListener(localAddr, port);
 
-                    Socket someClient = listner.AcceptSocket();//blocks
+                      System.Console.WriteLine("server ip:" + localAddr + ":" + port);
                     listner.Start();
                     while (!stop)
                     {
                         if (listner.Pending())
                         {
+                            Socket someClient = listner.AcceptSocket();//blocks
                             Stream s = new NetworkStream(someClient);
                             ThreadPool.QueueUserWorkItem(delegate (Object threadContext)
                             {
@@ -58,9 +59,11 @@ namespace MyRobot.Model.Network
                                 s.Close();
                                 someClient.Close();
                             });
+                       
                         }
                         else
                         {
+                            System.Console.WriteLine("sleeping...");
                             Thread.Sleep(5000);
                         }
                     }
@@ -86,10 +89,17 @@ namespace MyRobot.Model.Network
             stop = true;
         }
 
+
+
+        //MUST ADD try
+        //EXCEPTION when connectino lost during flash
        public static void MyClientHandler(StreamReader inFromClient, StreamWriter outToClient)
         {
-            string line;
-            while (! ((line = inFromClient.ReadLine()).Equals("exit"))){
+            string line = string.Empty;
+            while ((line = inFromClient.ReadLine()) != null){
+
+                //  ).Equals("exit")))
+                System.Console.WriteLine(line);
                 string reverseLine = new string(line.ToCharArray().Reverse().ToArray());
                 outToClient.WriteLine(reverseLine);
                 outToClient.Flush();
