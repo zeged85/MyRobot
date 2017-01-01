@@ -22,9 +22,15 @@
                    Height="66" Grid.ColumnSpan="2"/>
 
         <Button x:Name="start_Button"
-    		Content="Start"
+    		Content="Start ESP Server"
     		VerticalAlignment="Center"
-    		Click="Start" Margin="0,151,0,133.5" Height="38" />
+    		Click="StartESP" Margin="0,151,0,133.5" Height="38" />
+        
+        <Button x:Name="start_http_Button"
+                Content="Start HTTP Server"
+                VerticalAlignment="Center"
+                Click="StartHTTP"
+                Margin="0,51,0,133.5" Height="38" />
 
         <StatusBar Margin="0,224,0,66.5" >
             Loading...

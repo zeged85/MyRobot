@@ -32,7 +32,7 @@ namespace MyRobot
             DataContext = vm;
         }
 
-        private void Start(object sender, RoutedEventArgs e)
+        private void StartESP(object sender, RoutedEventArgs e)
         {
             MyServer server = new MyServer(1234, MyServer.MyClientHandler, 3);
 
@@ -62,6 +62,12 @@ namespace MyRobot
             */
 
 
+        }
+
+        private void StartHTTP(object sender, RoutedEventArgs e)
+        {
+
+            SimpleTcpSrvr.StartServer();
         }
 
         private bool dragStarted = false;
