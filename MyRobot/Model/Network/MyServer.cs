@@ -30,42 +30,28 @@ namespace MyRobot.Model.Network
                 TcpListener listner = null;
                 try
                 {
-                    // Set the TcpListener on port 13000.
-                 //   Int32 port = 13000;
-                    //    IPAddress localAddr = IPAddress.Parse("127.0.0.1");
-                    // IPAddress localAddr = Dns.Resolve("localhost").AddressList[0];
-                    IPAddress localAddr = Dns.GetHostEntry(Dns.GetHostName()).AddressList.First(f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
-
-
-
-                    // TcpListener server = new TcpListener(port);
+                    IPAddress localAddr = IPAddress.Parse("192.168.1.5");
                     listner = new TcpListener(localAddr, port);
-
-                      System.Console.WriteLine("server ip:" + localAddr + ":" + port);
+                    System.Console.WriteLine("server ip:" + localAddr + ":" + port);
                     listner.Start();
                     while (!stop)
                     {
-                        if (listner.Pending())
-                        {
+                       
                             Socket someClient = listner.AcceptSocket();//blocks
-                            Stream s = new NetworkStream(someClient);
                             ThreadPool.QueueUserWorkItem(delegate (Object threadContext)
                             {
-
-                                //communicate over stream
-                                ch(new StreamReader(s), new StreamWriter(s));
-
-
-                                s.Close();
-                                someClient.Close();
+                                using (Socket threadSocket = someClient)
+                                {
+                                    using (Stream s = new NetworkStream(someClient))
+                                    {
+                                        ch(new StreamReader(s), new StreamWriter(s));
+                                    }
+                                }
                             });
-                       
-                        }
-                        else
-                        {
+
                             System.Console.WriteLine("sleeping...");
-                            Thread.Sleep(5000);
-                        }
+                            Thread.Sleep(400);
+                        
                     }
                     // listner.Stop();
 
