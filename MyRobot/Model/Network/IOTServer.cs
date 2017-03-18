@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace MyRobot.Model.Network
 {
     public delegate void ClientHandler(StreamReader r, StreamWriter w);
-    class MyServer
+    class IOTServer
     {
         int port;
         ClientHandler ch;
         volatile bool stop;
-        public MyServer(int port, ClientHandler ch, int maxTreads)
+        public IOTServer(int port, ClientHandler ch, int maxTreads)
         {
             this.port = port;
             this.ch = ch;
@@ -30,7 +30,7 @@ namespace MyRobot.Model.Network
                 TcpListener listner = null;
                 try
                 {
-                    IPAddress localAddr = IPAddress.Parse("192.168.1.5");
+                    IPAddress localAddr = IPAddress.Parse("192.168.1.5"); //LOOPBACK
                     listner = new TcpListener(localAddr, port);
                     System.Console.WriteLine("server ip:" + localAddr + ":" + port);
                     listner.Start();

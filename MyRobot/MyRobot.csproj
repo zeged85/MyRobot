@@ -58,9 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Network\MyServer.cs" />
+    <Compile Include="Model\Network\IOTServer.cs" />
     <Compile Include="Model\Network\MyTelnetClient.cs" />
-    <Compile Include="Model\Network\SimpleTcpSrvr.cs" />
+    <Compile Include="Model\Network\HTTPServer.cs" />
     <Compile Include="ViewModel\RobotViewModel.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

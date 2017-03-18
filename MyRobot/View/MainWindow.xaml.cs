@@ -34,7 +34,7 @@ namespace MyRobot
 
         private void StartESP(object sender, RoutedEventArgs e)
         {
-            MyServer server = new MyServer(1234, MyServer.MyClientHandler, 3);
+            IOTServer server = new IOTServer(1234, IOTServer.MyClientHandler, 3);
 
             server.start();
             /*
@@ -67,7 +67,7 @@ namespace MyRobot
         private void StartHTTP(object sender, RoutedEventArgs e)
         {
 
-            SimpleTcpSrvr.StartServer();
+            HTTPServer.StartServer();
         }
 
         private bool dragStarted = false;
