@@ -105,8 +105,15 @@ void loop() {
   
   // Read all the lines of the reply from server and print them to Serial
   while(client.available()){
-    String line = client.readStringUntil('\r');
-    Serial.print(line);
+    String line = client.readStringUntil('\r'); //BLOCKING
+    
+    //
+    //parse string for commands
+    //execute commands
+    //client.println("OK"); - send ack
+    Serial.print(line); //DEBUG
+    //
+    //
   }
   
   Serial.println();
