@@ -25,7 +25,7 @@
     		Content="Start ESP Server"
     		VerticalAlignment="Center"
     		Click="StartESP" Margin="0,151,0,133.5" Height="38" />
-        
+
         <Button x:Name="start_http_Button"
                 Content="Start HTTP Server"
                 VerticalAlignment="Center"
@@ -36,7 +36,7 @@
             Loading...
 
             <ProgressBar x:Name="progressBar1" Width="144" Height="95" Value="{Binding VM_Azimuth}" />
-   
+
             67%
         </StatusBar>
 
@@ -44,6 +44,11 @@
                 ValueChanged="Slider_ValueChanged" Thumb.DragStarted="Slider_DragStarted"
     Thumb.DragCompleted="Slider_DragCompleted"
                 />
+        <Button x:Name="start_websocket_Button"
+        	Content="Start WebSocket Server"
+        	VerticalAlignment="Center"
+        	Click="StartWebSocket"
+        	Margin="44,101,242,183.5" Height="38" Grid.Column="1" />
 
 
 

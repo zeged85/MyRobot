@@ -61,6 +61,7 @@
     <Compile Include="Model\Network\IOTServer.cs" />
     <Compile Include="Model\Network\MyTelnetClient.cs" />
     <Compile Include="Model\Network\HTTPServer.cs" />
+    <Compile Include="Model\Network\WebSocket.cs" />
     <Compile Include="ViewModel\RobotViewModel.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -106,7 +107,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TextFile1.txt" />
+    <Content Include="main.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

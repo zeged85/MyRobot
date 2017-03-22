@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace MyRobot.Model.Network
 {
@@ -27,10 +28,22 @@ namespace MyRobot.Model.Network
 
             newsock.Bind(ipep);
             newsock.Listen(10);
-            Console.WriteLine("Waiting for a client...");
+
+                bool online = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+
+                Console.WriteLine("Waiting for a client on ip:"+ GetLocalIPAddress() + " port:80");
 
 
-            Socket client = newsock.Accept();
+                ///http://stackoverflow.com/questions/6803073/get-local-ip-address
+                ///
+
+                
+
+
+       // To check if you're connected or not:
+
+
+                Socket client = newsock.Accept();
             IPEndPoint clientep =
                          (IPEndPoint)client.RemoteEndPoint;
             Console.WriteLine("Connected with {0} at port {1}",
@@ -50,9 +63,16 @@ namespace MyRobot.Model.Network
 
 
 
-            string mainPage = "<!doctype html><head><meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1\"><link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css\" /><script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script><script src=\"http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js\"></script></head><style>h3, h4 {text-align: center;}span {font-weight: bold;}</style><div data-role=\"page\" data-theme=\"b\"><div data-role=\"header\"><div><h3>ESP8266 Web Control</h3></div></div><div data-role=\"content\"><form><p>The button is <span id=\"buttonState\"></span></p><br><select name=\"flip-1\" id=\"flip-1\" data-role=\"slider\" style=\"float: left;\"><option value=\"off\">LED off</option><option value=\"on\">LED on</option></select></form></div> <div data-role=\"footer\"><div><h4>ESP8266</h4></div></div><script type=text/javascript>$( document ).ready(function() {$('#flip-1').change(function() { if($('#flip-1').val()==\"off\"){$.get(\"/LED=OFF\", function(data, status) {});}else{ $.get(\"/LED=ON\", function(data, status) {});}}); });</script></div>";
+            //string mainPage = "<!doctype html><head><meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1\"><link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css\" /><script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script><script src=\"http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js\"></script></head><style>h3, h4 {text-align: center;}span {font-weight: bold;}</style><div data-role=\"page\" data-theme=\"b\"><div data-role=\"header\"><div><h3>ESP8266 Web Control</h3></div></div><div data-role=\"content\"><form><p>The button is <span id=\"buttonState\"></span></p><br><select name=\"flip-1\" id=\"flip-1\" data-role=\"slider\" style=\"float: left;\"><option value=\"off\">LED off</option><option value=\"on\">LED on</option></select></form></div> <div data-role=\"footer\"><div><h4>ESP8266</h4></div></div><script type=text/javascript>$( document ).ready(function() {$('#flip-1').change(function() { if($('#flip-1').val()==\"off\"){$.get(\"/LED=OFF\", function(data, status) {});}else{ $.get(\"/LED=ON\", function(data, status) {});}}); });</script></div>";
 
-            data = Encoding.UTF8.GetBytes(httpHeader + mainPage);
+
+
+                string htmlPath = @"C:\Users\Nir\OneDrive\Documents\Smart Home\MyRobot\MyRobot\main.html";
+                string htmlFile = File.OpenText(htmlPath).ReadToEnd();
+         
+            
+
+            data = Encoding.UTF8.GetBytes(httpHeader + htmlFile);
             client.Send(data, data.Length, SocketFlags.None);
 
 
@@ -75,7 +95,7 @@ namespace MyRobot.Model.Network
 
             Console.WriteLine(line);
 
-
+                //CLIENT INPUT COMMANDS TO SERVER
             if (line.IndexOf("/LED=ON") != -1)
             {
                 //   digitalWrite(LED, LOW);
@@ -101,11 +121,35 @@ namespace MyRobot.Model.Network
             //      break;
 
             //      }
+
+
+
+                //SERVER OUTPUT COMMANDS INTO CLIENT INPUT
+
+                //1.LOOP CYCLE
+                //2.FLUSHING
+
+
             Console.WriteLine("Disconnected from {0}",
                               clientep.Address);
             client.Close();
             newsock.Close();
         }
         }
+        //To get local Ip Address:
+
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("Local IP Address Not Found!");
+        }
     }
+
 }

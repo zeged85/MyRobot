@@ -32,6 +32,10 @@ namespace MyRobot
             DataContext = vm;
         }
 
+        private void StartWebSocket(object sender, RoutedEventArgs e)
+        {
+            WebSocket.StartServer();
+        }
         private void StartESP(object sender, RoutedEventArgs e)
         {
             IOTServer server = new IOTServer(1234, IOTServer.MyClientHandler, 3);
