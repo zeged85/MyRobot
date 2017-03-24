@@ -14,7 +14,7 @@ namespace MyRobot.Model.Network
     {
         public static void StartServer()
         {
-            TcpListener server = new TcpListener(IPAddress.Any, 80);
+            TcpListener server = new TcpListener(IPAddress.Any, 9998);
 
             server.Start();
             Console.WriteLine("Server has started on " + HTTPServer.GetLocalIPAddress() +":80.{0}Waiting for a connection...", Environment.NewLine);

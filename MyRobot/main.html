@@ -40,6 +40,10 @@
 			</div>
 		</div>
 
+        <div id="sse">
+            <a href="javascript:WebSocketTest()">Run WebSocket</a>
+        </div>
+
 	<script type=text/javascript>
 
 	$( document ).ready(function() {
@@ -68,7 +72,41 @@
 	
         */
 	
+        //https://www.tutorialspoint.com/html5/html5_websocket.htm
+	function WebSocketTest() {
+	    if ("WebSocket" in window) {
+	        alert("WebSocket is supported by your Browser!");
+
+	        // Let us open a web socket
+	        var ws = new WebSocket("ws://10.0.0.2:9998/echo");
+
+	        ws.onopen = function () {
+	            // Web Socket is connected, send data using send()
+	            ws.send("Message to send");
+	            alert("Message is sent...");
+	        };
+
+	        ws.onmessage = function (evt) {
+	            var received_msg = evt.data;
+	            alert("Message is received...");
+	        };
+
+	        ws.onclose = function () {
+	            // websocket is closed.
+	            alert("Connection is closed...");
+	        };
+	    }
+
+	    else {
+	        // The browser doesn't support WebSocket
+	        alert("WebSocket NOT supported by your Browser!");
+	    }
+	}
+
+
 	</script>
 	</div>
+
+
 ";
  

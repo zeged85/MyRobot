@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace MyRobot
 {
@@ -34,7 +35,9 @@ namespace MyRobot
 
         private void StartWebSocket(object sender, RoutedEventArgs e)
         {
-            WebSocket.StartServer();
+            Thread socketThread = new Thread(WebSocket.StartServer);
+            socketThread.Start();
+            
         }
         private void StartESP(object sender, RoutedEventArgs e)
         {
@@ -71,7 +74,8 @@ namespace MyRobot
         private void StartHTTP(object sender, RoutedEventArgs e)
         {
 
-            HTTPServer.StartServer();
+           Thread httpThread = new Thread(HTTPServer.StartServer);
+            httpThread.Start();
         }
 
         private bool dragStarted = false;
