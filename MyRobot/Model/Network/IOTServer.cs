@@ -30,7 +30,7 @@ namespace MyRobot.Model.Network
                 TcpListener listner = null;
                 try
                 {
-                    IPAddress localAddr = IPAddress.Parse("192.168.1.5"); //LOOPBACK
+                    IPAddress localAddr = IPAddress.Parse("10.0.0.2"); //LOOPBACK
                     listner = new TcpListener(localAddr, port);
                     System.Console.WriteLine("server ip:" + localAddr + ":" + port);
                     listner.Start();
