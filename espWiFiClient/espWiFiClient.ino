@@ -8,10 +8,12 @@
 
 #include <ESP8266WiFi.h>
 
-const char* ssid     = "Test";
-const char* password = "12345678";
 
-const char* host = "172.20.10.2"; //set server's known ip
+//initialize wifi
+const char* ssid     = "Zeged_2.4";
+const char* password = "idspispopd";
+
+const char* host = "10.0.0.2"; //set server's known ip
 const int httpPort = 1234; //server port
 const char* streamId   = "....................";
 const char* privateKey = "....................";
@@ -20,9 +22,23 @@ String myIPstr = "";
 String clientMac = "";
 
 
+
+
+
 void setup() {
   Serial.begin(115200);
   delay(10);
+  
+//init GPIO
+pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
+
+//digitalWrite(LED_BUILTIN, LOW);   // Turn the LED on (Note that LOW is the voltage level
+                                    // but actually the LED is on; this is because 
+                                    // it is acive low on the ESP-01)
+ // delay(1000);                      // Wait for a second
+ // digitalWrite(LED_BUILTIN, HIGH);  // Turn the LED off by making the voltage HIGH
+  //delay(2000);                      // Wait for two seconds (to demonstrate the active low LED)
+
 
   // We start by connecting to a WiFi network
 
@@ -34,10 +50,13 @@ void setup() {
   WiFi.begin(ssid, password);
   
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(250);
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(250);
     Serial.print(".");
   }
-
+ 
   Serial.println("");
   Serial.println("WiFi connected");  
   Serial.println("IP address: ");
@@ -65,9 +84,9 @@ int value = 0;
 
 
 void loop() {
-  delay(5000);
+  //delay(5000);
   ++value;
-
+digitalWrite(LED_BUILTIN, LOW);
   Serial.print("connecting to ");
   Serial.println(host);
   
@@ -78,7 +97,8 @@ void loop() {
     Serial.println("connection failed");
     return;
   }
-  
+
+  digitalWrite(LED_BUILTIN, HIGH);
   // We now create a URI for the request
 
   
@@ -105,19 +125,14 @@ void loop() {
   
   // Read all the lines of the reply from server and print them to Serial
   while(client.available()){
-    String line = client.readStringUntil('\r'); //BLOCKING
-    
-    //
-    //parse string for commands
-    //execute commands
-    //client.println("OK"); - send ack
-    Serial.print(line); //DEBUG
-    //
-    //
+    String line = client.readStringUntil('\r');
+    Serial.print(line);
   }
   
   Serial.println();
   Serial.println("closing connection");
+
+  
 }
 
 String IpAddress2String(const IPAddress& ipAddress)
