@@ -21,8 +21,12 @@ const char* privateKey = "....................";
 String myIPstr = "";
 String clientMac = "";
 
+#define ArrayPin     D0
 
 
+
+
+const int Blue_LED =  2;      // the number of the LED pin
 
 
 void setup() {
@@ -31,7 +35,6 @@ void setup() {
   
 //init GPIO
 pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
-
 //digitalWrite(LED_BUILTIN, LOW);   // Turn the LED on (Note that LOW is the voltage level
                                     // but actually the LED is on; this is because 
                                     // it is acive low on the ESP-01)
@@ -39,6 +42,16 @@ pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
  // digitalWrite(LED_BUILTIN, HIGH);  // Turn the LED off by making the voltage HIGH
   //delay(2000);                      // Wait for two seconds (to demonstrate the active low LED)
 
+
+pinMode(Blue_LED, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
+pinMode(ArrayPin, OUTPUT);     
+
+
+
+
+
+  digitalWrite(Blue_LED, HIGH);
+digitalWrite(ArrayPin, HIGH);
 
   // We start by connecting to a WiFi network
 
@@ -84,9 +97,10 @@ int value = 0;
 
 
 void loop() {
-  //delay(5000);
+  delay(5000);
   ++value;
-digitalWrite(LED_BUILTIN, LOW);
+//digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(Blue_LED, LOW);
   Serial.print("connecting to ");
   Serial.println(host);
   
@@ -98,7 +112,9 @@ digitalWrite(LED_BUILTIN, LOW);
     return;
   }
 
-  digitalWrite(LED_BUILTIN, HIGH);
+//  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(Blue_LED, HIGH);
+  
   // We now create a URI for the request
 
   
@@ -132,7 +148,11 @@ digitalWrite(LED_BUILTIN, LOW);
   Serial.println();
   Serial.println("closing connection");
 
-  
+
+ //digitalWrite(ArrayPin, HIGH);
+//delay(1000);
+ // digitalWrite(ArrayPin, LOW);
+ // delay(1000);
 }
 
 String IpAddress2String(const IPAddress& ipAddress)
